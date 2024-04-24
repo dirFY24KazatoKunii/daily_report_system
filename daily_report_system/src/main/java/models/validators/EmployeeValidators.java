@@ -11,7 +11,7 @@ import services.EmployeeService;
  * 従業員インスタンスに設定されている値のバリデーションを行うクラス
  *
  */
-public class EmployeeValidator {
+public class EmployeeValidators {
 
     /**
      * 従業員インスタンスの各項目についてバリデーションを行う
