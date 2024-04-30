@@ -1,33 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="constants.AttributeConst" %>
+<%@ page import="constants.ForwardConst" %>
 
-<c:if test="${errors != null}">
-    <div id="flush_error">
-        入力内容にエラーがあります。<br />
-        <c:forEach var="error" items="${errors}">
-            ・<c:out value="${error}" /><br />
-        </c:forEach>
+<c:set var="action" value="${ForwardConst.ACT_REP.getValue()}" />
+<c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
+<c:set var="commCrt" value="${ForwardConst.CMD_CREATE.getValue()}" />
 
-    </div>
-</c:if>
-<fmt:parseDate value="${report.reportDate}" pattern="yyyy-MM-dd" var="reportDay" type="date" />
-<label for="${AttributeConst.REP_DATE.getValue()}">日付</label><br />
-<input type="date" name="${AttributeConst.REP_DATE.getValue()}" id="${AttributeConst.REP_DATE.getValue()}" value="<fmt:formatDate value='${reportDay}' pattern='yyyy-MM-dd' />" />
-<br /><br />
+<c:import url="/WEB-INF/views/layout/app.jsp">
+    <c:param name="content">
+        <h2>日報　新規登録ページ</h2>
 
-<label>氏名</label><br />
-<c:out value="${sessionScope.login_employee.name}" />
-<br /><br />
+        <form method="POST" action="<c:url value='?action=${action}&command=${commCrt}' />">
+            <c:import url="_form.jsp" />
+        </form>
 
-<label for="${AttributeConst.REP_TITLE.getValue()}">タイトル</label><br />
-<input type="text" name="${AttributeConst.REP_TITLE.getValue()}" id="${AttributeConst.REP_TITLE.getValue()}" value="${report.title}" />
-<br /><br />
-
-<label for="${AttributeConst.REP_CONTENT.getValue()}">内容</label><br />
-<textarea  name="${AttributeConst.REP_CONTENT.getValue()}" id="${AttributeConst.REP_CONTENT.getValue()}" rows="10" cols="50">${report.content}</textarea>
-<br /><br />
-<input type="hidden" name="${AttributeConst.REP_ID.getValue()}" value="${report.id}" />
-<input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
-<button type="submit">投稿</button>
+        <p><a href="<c:url value='?action=${action}&command=${commIdx}' />">一覧に戻る</a></p>
+    </c:param>
+</c:import>
